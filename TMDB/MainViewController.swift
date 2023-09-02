@@ -123,7 +123,7 @@ class MainViewController: UIViewController {
         stackView.distribution = .fillEqually
         stackView.spacing = 10
         
-        tableView.addSubview(stackView)
+        view.addSubview(stackView)
         stackView.snp.makeConstraints { make in
             make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-10)
             make.left.right.equalTo(view.safeAreaLayoutGuide).inset(10)
