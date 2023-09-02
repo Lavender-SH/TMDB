@@ -61,6 +61,9 @@
 			isa = PBXGroup;
 			children = (
 				025ACC852AA3811400D6FFD1 /* TMDB */,
+				025ACCAF2AA3882600D6FFD1 /* Model */,
+				025ACCB62AA393E500D6FFD1 /* Cell */,
+				025ACCAC2AA387E700D6FFD1 /* Network */,
 				025ACC842AA3811400D6FFD1 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -80,8 +83,6 @@
 				025ACC882AA3811400D6FFD1 /* SceneDelegate.swift */,
 				025ACC8A2AA3811400D6FFD1 /* ViewController.swift */,
 				025ACC9B2AA381E300D6FFD1 /* MainViewController.swift */,
-				025ACCB62AA393E500D6FFD1 /* Cell */,
-				025ACCAC2AA387E700D6FFD1 /* Network */,
 				025ACC8F2AA3811500D6FFD1 /* Assets.xcassets */,
 				025ACC912AA3811500D6FFD1 /* LaunchScreen.storyboard */,
 				025ACC942AA3811500D6FFD1 /* Info.plist */,
@@ -95,7 +96,6 @@
 				025ACCA82AA387C400D6FFD1 /* NetworkManager.swift */,
 				025ACCAA2AA387E200D6FFD1 /* API Key.swift */,
 				025ACCB02AA3887200D6FFD1 /* .gitignore */,
-				025ACCAF2AA3882600D6FFD1 /* Model */,
 			);
 			path = Network;
 			sourceTree = "<group>";

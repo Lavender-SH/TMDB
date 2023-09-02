@@ -9,8 +9,11 @@ import Foundation
 import Alamofire
 
 
-func TrendAPICallRequest(completion: @escaping ([TrendingItem]?) -> Void) {
-    let url = "https://api.themoviedb.org/3/trending/all/day?api_key=\(APIKey.TMDBKey)"
+func TrendAPICallRequest(type: String? = nil, completion: @escaping ([TrendingItem]?) -> Void) {
+    
+    var url = "https://api.themoviedb.org/3/trending/all/day?api_key=\(APIKey.TMDBKey)"
+    if let type = type { url = "https://api.themoviedb.org/3/trending/\(type)/day?api_key=\(APIKey.TMDBKey)"}
+
     AF.request(url, method: .get).validate(statusCode: 200...500).responseDecodable(of: TrendingResponse.self) { response in
         guard let value = response.value else { return }
         
