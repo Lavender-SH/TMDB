@@ -15,8 +15,8 @@ struct TrendingItem: Codable {
     let id: Int
     let name: String? // for tv and person
     let title: String? // for movie
-    let overview: String
-    let posterPath: String
+    let overview: String?
+    let posterPath: String?
     let mediaType: MediaType
 
     enum CodingKeys: String, CodingKey {

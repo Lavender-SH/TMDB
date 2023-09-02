@@ -33,7 +33,7 @@ class MainViewController: UIViewController {
     func loadData() {
         TrendAPICallRequest { [weak self] items in
                     guard let weakSelf = self, let items = items else { return }
-                    weakSelf.trendingItems = items
+                    weakSelf.trendingItems.append(contentsOf: items)
                     weakSelf.tableView.reloadData()
             print(#function)
             print("==1==", weakSelf.trendingItems)
@@ -62,17 +62,17 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             switch item.mediaType {
             case .movie:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as! MovieTableViewCell
-                
+                cell.configure(with: item)
                 return cell
                 
             case .tv:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "TVCell", for: indexPath) as! TVTableViewCell
-                
+                cell.configure(with: item)
                 return cell
                 
             case .person:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "PersonCell", for: indexPath) as! PersonTableViewCell
-                
+                cell.configure(with: item)
                 return cell
             }
         }
