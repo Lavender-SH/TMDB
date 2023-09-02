@@ -7,6 +7,9 @@
 
 import Foundation
 
+struct TrendingResponse: Codable {
+    let results: [TrendingItem]
+}
 
 struct TrendingItem: Codable {
     let id: Int

@@ -27,8 +27,19 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
+        loadData()
         
     }
+    func loadData() {
+        TrendAPICallRequest { [weak self] items in
+                    guard let weakSelf = self, let items = items else { return }
+                    weakSelf.trendingItems = items
+                    weakSelf.tableView.reloadData()
+            print(#function)
+            print("==1==", weakSelf.trendingItems)
+                }
+            }
+    
     
     private func setupTableView() {
         view.addSubview(tableView)
