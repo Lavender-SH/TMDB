@@ -50,20 +50,24 @@ class MainView: BaseView {
     }()
     
     override func configureView() {
-        addSubview(searchBar)
         addSubview(tableView)
+        addSubview(searchBar)
         setupButtons()
+        
         
     }
     override func setConstraints() {
-        tableView.snp.makeConstraints { make in
-            make.edges.equalTo(self.safeAreaLayoutGuide)
-        }
         searchBar.snp.makeConstraints { make in
             make.top.equalTo(self.safeAreaLayoutGuide.snp.top)
             make.left.right.equalToSuperview()
+            make.height.equalTo(50)
         }
         
+        tableView.snp.makeConstraints { make in
+            make.top.equalTo(searchBar.snp.bottom)
+            make.left.right.equalTo(self.safeAreaLayoutGuide)
+            make.bottom.equalTo(self.safeAreaLayoutGuide)
+        }
     }
 
     
@@ -81,3 +85,5 @@ class MainView: BaseView {
         }
     }
 }
+
+

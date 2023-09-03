@@ -11,7 +11,7 @@ import SnapKit
 enum MediaSelection {
     case movie
     case tv
-    case person
+    
 }
 
 class MainViewController: BaseViewController {
@@ -20,6 +20,7 @@ class MainViewController: BaseViewController {
     var trendingItems: [TrendingItem] = []
     var filteredItems: [TrendingItem] = []
     var personItems: [Result] = []
+    var isPersonSelected: Bool = false
     
     var selectedMedia: MediaSelection? = nil {
         didSet {
@@ -28,11 +29,8 @@ class MainViewController: BaseViewController {
                 filteredItems = trendingItems.filter { $0.mediaType == .movie }
             case .tv:
                 filteredItems = trendingItems.filter { $0.mediaType == .tv }
-            case .person:
-                
-                break
             case .none:
-                filteredItems = trendingItems
+                break
             }
             mainView.tableView.reloadData()
         }
@@ -45,12 +43,14 @@ class MainViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loadData()
+        personLoadData(type: "person")
         mainView.tableView.delegate = self
         mainView.tableView.dataSource = self
         mainView.searchBar.delegate = self
         mainView.movieButton.addTarget(self, action: #selector(filterButtonTapped(_:)), for: .touchUpInside)
         mainView.tvButton.addTarget(self, action: #selector(filterButtonTapped(_:)), for: .touchUpInside)
-        mainView.personButton.addTarget(self, action: #selector(filterButtonTapped(_:)), for: .touchUpInside)
+        mainView.personButton.addTarget(self, action: #selector(personButtonTapped(_:)), for: .touchUpInside)
+        
         
         let appearance = UINavigationBarAppearance()
         appearance.backgroundColor = .yellow
@@ -71,36 +71,36 @@ class MainViewController: BaseViewController {
             print("==0==", weakSelf.trendingItems)
         }
     }
-    
+    //⭐️⭐️⭐️
     func personLoadData(type: String? = nil) {
         TrendAPIPersonCallRequest(type: type) { [weak self] items in
+            print("=====333333====", items)
             guard let weakSelf = self, let items = items else { return }
             weakSelf.personItems.append(contentsOf: items)
             weakSelf.mainView.tableView.reloadData()
             print(#function)
-            print("==0.00==", weakSelf.trendingItems)
+            print("==0.00==", weakSelf.personItems)
         }
-    }
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let searchText = searchBar.text else { return }
-        loadData(type: searchText)
-        personLoadData(type: searchText)
     }
     
     
     @objc func filterButtonTapped(_ sender: UIButton) {
+        isPersonSelected = false
         switch sender.tag {
         case 0:
             selectedMedia = .movie
         case 1:
             selectedMedia = .tv
-        case 2:
-            selectedMedia = .person
-            personLoadData()
         default:
             selectedMedia = nil
         }
+        mainView.tableView.reloadData()
+    }
+    
+    @objc func personButtonTapped(_ sender: UIButton) {
+        selectedMedia = nil
+        isPersonSelected = true
+        personLoadData(type: "person")
         mainView.tableView.reloadData()
     }
 }
@@ -109,22 +109,26 @@ class MainViewController: BaseViewController {
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch selectedMedia {
-        case .person:
+        if isPersonSelected {
             return personItems.count
-        default:
-            return filteredItems.count
         }
-        
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch selectedMedia {
-        case .person:
+        case .movie, .tv:
+            return filteredItems.count
+        case .none:
+            return 0
+        }
+    }
+    //⭐️⭐️⭐️
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if isPersonSelected {
             let personItem = personItems[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: "PersonCell", for: indexPath) as! PersonTableViewCell
             cell.configure(with: personItem)
             return cell
+        }
+        
+        switch selectedMedia {
         case .movie:
             let item = filteredItems[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as! MovieTableViewCell
@@ -135,11 +139,9 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TVCell", for: indexPath) as! TVTableViewCell
             cell.configure(with: item)
             return cell
-        
         case .none:
             return UITableViewCell()
         }
-       
     }
 }
 
@@ -153,18 +155,12 @@ extension MainViewController: UISearchBarDelegate {
         }
         return true
     }
+    
+    //⭐️⭐️⭐️
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchText = searchBar.text else { return }
+        loadData(type: searchText)
+        personLoadData(type: searchText)
+        mainView.tableView.reloadData()
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-
+// MARK: - All
 func TrendAPIAllCallRequest(type: String? = nil, completion: @escaping ([TrendingItem]?) -> Void) {
     
     var url = "https://api.themoviedb.org/3/trending/all/day?api_key=\(APIKey.TMDBKey)"
@@ -34,11 +34,12 @@ func TrendAPIAllCallRequest(type: String? = nil, completion: @escaping ([Trendin
     }
 }
 
-
+// MARK: - person
+//⭐️⭐️⭐️
 func TrendAPIPersonCallRequest(type: String? = nil, completion: @escaping ([Result]?) -> Void) {
     
     var url = "https://api.themoviedb.org/3/trending/all/day?api_key=\(APIKey.TMDBKey)"
-    if let type = type { url = "https://api.themoviedb.org/3/trending/\(type)/day?api_key=\(APIKey.TMDBKey)&size=5&page=3"}
+    if let type = type { url = "https://api.themoviedb.org/3/trending/\(type)/day?api_key=\(APIKey.TMDBKey)&size=10&page=1"}
 
     AF.request(url, method: .get).validate(statusCode: 200...500).responseDecodable(of: Person.self) { response in
         guard let value = response.value else { return }
