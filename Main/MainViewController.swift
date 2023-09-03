@@ -8,20 +8,35 @@
 import UIKit
 import SnapKit
 
+enum MediaSelection {
+    case movie
+    case tv
+    case person
+}
+
 class MainViewController: UIViewController {
     
     var trendingItems: [TrendingItem] = []
     var filteredItems: [TrendingItem] = []
-    var selectedMediaType: MediaType? = nil {
+    var personItems: [Result] = []
+    
+    var selectedMedia: MediaSelection? = nil {
         didSet {
-            if let mediaType = selectedMediaType {
-                filteredItems = trendingItems.filter { $0.mediaType == mediaType }
-            } else {
+            switch selectedMedia {
+            case .movie:
+                filteredItems = trendingItems.filter { $0.mediaType == .movie }
+            case .tv:
+                filteredItems = trendingItems.filter { $0.mediaType == .tv }
+            case .person:
+                
+                break
+            case .none:
                 filteredItems = trendingItems
             }
             tableView.reloadData()
         }
     }
+    
     
     lazy var tableView: UITableView = {
         let view = UITableView()
@@ -84,12 +99,23 @@ class MainViewController: UIViewController {
         title = ""
     }
     func loadData(type: String? = nil) {
-        TrendAPICallRequest(type: type) { [weak self] items in
+        TrendAPIAllCallRequest(type: type) { [weak self] items in
             guard let weakSelf = self, let items = items else { return }
             weakSelf.trendingItems.append(contentsOf: items)
+            weakSelf.filteredItems.append(contentsOf: items)
             weakSelf.tableView.reloadData()
             print(#function)
             print("==0==", weakSelf.trendingItems)
+        }
+    }
+    
+    func personLoadData(type: String? = nil) {
+        TrendAPIPersonCallRequest(type: type) { [weak self] items in
+            guard let weakSelf = self, let items = items else { return }
+            weakSelf.personItems.append(contentsOf: items)
+            weakSelf.tableView.reloadData()
+            print(#function)
+            print("==0.00==", weakSelf.trendingItems)
         }
     }
     
@@ -106,9 +132,8 @@ class MainViewController: UIViewController {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchText = searchBar.text else { return }
         loadData(type: searchText)
+        personLoadData(type: searchText)
     }
-    
-    
     
     
     private func setupTableView() {
@@ -133,13 +158,14 @@ class MainViewController: UIViewController {
     @objc func filterButtonTapped(_ sender: UIButton) {
         switch sender.tag {
         case 0:
-            selectedMediaType = .movie
+            selectedMedia = .movie
         case 1:
-            selectedMediaType = .tv
+            selectedMedia = .tv
         case 2:
-            selectedMediaType = .person
+            selectedMedia = .person
+            personLoadData()
         default:
-            selectedMediaType = nil
+            selectedMedia = nil
         }
         tableView.reloadData()
     }
@@ -149,44 +175,67 @@ class MainViewController: UIViewController {
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredItems.count
+        switch selectedMedia {
+        case .person:
+            return personItems.count
+        default:
+            return filteredItems.count
+        }
+        
     }
+    
+    
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let item = filteredItems[indexPath.row]
-        
-        switch item.mediaType {
+        switch selectedMedia {
+        case .person:
+            let personItem = personItems[indexPath.row]
+            let cell = tableView.dequeueReusableCell(withIdentifier: "PersonCell", for: indexPath) as! PersonTableViewCell
+            cell.configure(with: personItem)
+            return cell
         case .movie:
+            let item = filteredItems[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as! MovieTableViewCell
             cell.configure(with: item)
-            print("==1==")
             return cell
-            
         case .tv:
+            let item = filteredItems[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: "TVCell", for: indexPath) as! TVTableViewCell
             cell.configure(with: item)
-            print("==2==")
             return cell
-            
-        case .person:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "PersonCell", for: indexPath) as! PersonTableViewCell
-            cell.configure(with: item)
-            print("==3==")
-            return cell
+        
+        case .none:
+            return UITableViewCell()
         }
+       
     }
+    
     
 }
-    
-    extension MainViewController: UISearchBarDelegate {
-        func searchBar(_ searchBar: UISearchBar, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-            
-            if range.location == 0 {
-                searchBar.text = text.lowercased()
-                return false
-            }
-            return true
+
+
+extension MainViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        
+        if range.location == 0 {
+            searchBar.text = text.lowercased()
+            return false
         }
+        return true
     }
-    
-    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

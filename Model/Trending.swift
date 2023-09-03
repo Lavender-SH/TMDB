@@ -13,8 +13,8 @@ struct TrendingResponse: Codable {
 
 struct TrendingItem: Codable {
     let id: Int
-    let name: String? // for tv and person
-    let title: String? // for movie
+    let name: String?
+    let title: String?
     let overview: String?
     let posterPath: String?
     let mediaType: MediaType
@@ -29,5 +29,5 @@ struct TrendingItem: Codable {
 enum MediaType: String, Codable {
     case movie = "movie"
     case tv = "tv"
-    case person = "person"
+    
 }

@@ -23,6 +23,7 @@
 		025ACCB12AA3887200D6FFD1 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 025ACCB02AA3887200D6FFD1 /* .gitignore */; };
 		025ACCB32AA3931600D6FFD1 /* TVTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025ACCB22AA3931500D6FFD1 /* TVTableViewCell.swift */; };
 		025ACCB52AA393DB00D6FFD1 /* PersonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025ACCB42AA393DB00D6FFD1 /* PersonTableViewCell.swift */; };
+		025ACCB82AA4676900D6FFD1 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025ACCB72AA4676900D6FFD1 /* Person.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,7 @@
 		025ACCB02AA3887200D6FFD1 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		025ACCB22AA3931500D6FFD1 /* TVTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVTableViewCell.swift; sourceTree = "<group>"; };
 		025ACCB42AA393DB00D6FFD1 /* PersonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonTableViewCell.swift; sourceTree = "<group>"; };
+		025ACCB72AA4676900D6FFD1 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 			isa = PBXGroup;
 			children = (
 				025ACC852AA3811400D6FFD1 /* TMDB */,
+				025ACCB92AA478EC00D6FFD1 /* Main */,
 				025ACCAF2AA3882600D6FFD1 /* Model */,
 				025ACCB62AA393E500D6FFD1 /* Cell */,
 				025ACCAC2AA387E700D6FFD1 /* Network */,
@@ -82,7 +85,6 @@
 				025ACC862AA3811400D6FFD1 /* AppDelegate.swift */,
 				025ACC882AA3811400D6FFD1 /* SceneDelegate.swift */,
 				025ACC8A2AA3811400D6FFD1 /* ViewController.swift */,
-				025ACC9B2AA381E300D6FFD1 /* MainViewController.swift */,
 				025ACC8F2AA3811500D6FFD1 /* Assets.xcassets */,
 				025ACC912AA3811500D6FFD1 /* LaunchScreen.storyboard */,
 				025ACC942AA3811500D6FFD1 /* Info.plist */,
@@ -104,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				025ACCAD2AA3881F00D6FFD1 /* Trending.swift */,
+				025ACCB72AA4676900D6FFD1 /* Person.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -116,6 +119,14 @@
 				025ACCB42AA393DB00D6FFD1 /* PersonTableViewCell.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		025ACCB92AA478EC00D6FFD1 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				025ACC9B2AA381E300D6FFD1 /* MainViewController.swift */,
+			);
+			path = Main;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -203,6 +214,7 @@
 				025ACCB32AA3931600D6FFD1 /* TVTableViewCell.swift in Sources */,
 				025ACCAB2AA387E200D6FFD1 /* API Key.swift in Sources */,
 				025ACC8B2AA3811400D6FFD1 /* ViewController.swift in Sources */,
+				025ACCB82AA4676900D6FFD1 /* Person.swift in Sources */,
 				025ACCA72AA3855300D6FFD1 /* MovieTableViewCell.swift in Sources */,
 				025ACC872AA3811400D6FFD1 /* AppDelegate.swift in Sources */,
 				025ACC892AA3811400D6FFD1 /* SceneDelegate.swift in Sources */,

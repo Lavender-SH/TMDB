@@ -74,13 +74,15 @@ class PersonTableViewCell: UITableViewCell {
     }
     
     
-    func configure(with item: TrendingItem) {
-        titleLabel.text = item.title ?? item.name
-        overviewLabel.text = item.overview
-        if let posterPath = item.posterPath {
-            let url = URL(string: "https://image.tmdb.org/t/p/w500\(posterPath)")
-            posterImageView.kf.setImage(with: url)
+    func configure(with item: Result) {
+        if let firstKnownFor = item.knownFor.first {
+            titleLabel.text = firstKnownFor.title
+            overviewLabel.text = firstKnownFor.overview
+            if let posterPath = firstKnownFor.posterPath {
+                let url = URL(string: "https://image.tmdb.org/t/p/w500\(posterPath)")
+                posterImageView.kf.setImage(with: url)
+            }
         }
     }
-    
 }
+
