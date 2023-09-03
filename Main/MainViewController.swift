@@ -89,7 +89,7 @@ class MainViewController: BaseViewController {
     }
     
     
-    @objc func filterButtonTapped(_ sender: UIButton) {r
+    @objc func filterButtonTapped(_ sender: UIButton) {
         switch sender.tag {
         case 0:
             selectedMedia = .movie

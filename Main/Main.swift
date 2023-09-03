@@ -52,21 +52,20 @@ class MainView: BaseView {
     override func configureView() {
         addSubview(searchBar)
         addSubview(tableView)
+        setupButtons()
         
     }
-    
-    private func setupSearchBar() {
+    override func setConstraints() {
+        tableView.snp.makeConstraints { make in
+            make.edges.equalTo(self.safeAreaLayoutGuide)
+        }
         searchBar.snp.makeConstraints { make in
             make.top.equalTo(self.safeAreaLayoutGuide.snp.top)
             make.left.right.equalToSuperview()
         }
+        
     }
-    
-    private func setupTableView() {
-        tableView.snp.makeConstraints { make in
-            make.edges.equalTo(self.safeAreaLayoutGuide)
-        }
-    }
+
     
     private func setupButtons() {
         let stackView = UIStackView(arrangedSubviews: [movieButton, tvButton, personButton])
