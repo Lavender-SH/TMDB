@@ -24,6 +24,10 @@
 		025ACCB32AA3931600D6FFD1 /* TVTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025ACCB22AA3931500D6FFD1 /* TVTableViewCell.swift */; };
 		025ACCB52AA393DB00D6FFD1 /* PersonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025ACCB42AA393DB00D6FFD1 /* PersonTableViewCell.swift */; };
 		025ACCB82AA4676900D6FFD1 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025ACCB72AA4676900D6FFD1 /* Person.swift */; };
+		025ACCBB2AA4796B00D6FFD1 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025ACCBA2AA4796B00D6FFD1 /* Main.swift */; };
+		025ACCBE2AA47A2B00D6FFD1 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025ACCBD2AA47A2B00D6FFD1 /* BaseViewController.swift */; };
+		025ACCC02AA47A4600D6FFD1 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025ACCBF2AA47A4600D6FFD1 /* BaseView.swift */; };
+		025ACCC22AA47A5E00D6FFD1 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025ACCC12AA47A5E00D6FFD1 /* BaseTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +47,10 @@
 		025ACCB22AA3931500D6FFD1 /* TVTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVTableViewCell.swift; sourceTree = "<group>"; };
 		025ACCB42AA393DB00D6FFD1 /* PersonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonTableViewCell.swift; sourceTree = "<group>"; };
 		025ACCB72AA4676900D6FFD1 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
+		025ACCBA2AA4796B00D6FFD1 /* Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
+		025ACCBD2AA47A2B00D6FFD1 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		025ACCBF2AA47A4600D6FFD1 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		025ACCC12AA47A5E00D6FFD1 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +70,7 @@
 		025ACC7A2AA3811400D6FFD1 = {
 			isa = PBXGroup;
 			children = (
+				025ACCBC2AA47A0100D6FFD1 /* Base */,
 				025ACC852AA3811400D6FFD1 /* TMDB */,
 				025ACCB92AA478EC00D6FFD1 /* Main */,
 				025ACCAF2AA3882600D6FFD1 /* Model */,
@@ -125,8 +134,19 @@
 			isa = PBXGroup;
 			children = (
 				025ACC9B2AA381E300D6FFD1 /* MainViewController.swift */,
+				025ACCBA2AA4796B00D6FFD1 /* Main.swift */,
 			);
 			path = Main;
+			sourceTree = "<group>";
+		};
+		025ACCBC2AA47A0100D6FFD1 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				025ACCBD2AA47A2B00D6FFD1 /* BaseViewController.swift */,
+				025ACCBF2AA47A4600D6FFD1 /* BaseView.swift */,
+				025ACCC12AA47A5E00D6FFD1 /* BaseTableViewCell.swift */,
+			);
+			path = Base;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -210,16 +230,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				025ACCBE2AA47A2B00D6FFD1 /* BaseViewController.swift in Sources */,
 				025ACCA92AA387C400D6FFD1 /* NetworkManager.swift in Sources */,
 				025ACCB32AA3931600D6FFD1 /* TVTableViewCell.swift in Sources */,
 				025ACCAB2AA387E200D6FFD1 /* API Key.swift in Sources */,
 				025ACC8B2AA3811400D6FFD1 /* ViewController.swift in Sources */,
 				025ACCB82AA4676900D6FFD1 /* Person.swift in Sources */,
 				025ACCA72AA3855300D6FFD1 /* MovieTableViewCell.swift in Sources */,
+				025ACCBB2AA4796B00D6FFD1 /* Main.swift in Sources */,
 				025ACC872AA3811400D6FFD1 /* AppDelegate.swift in Sources */,
 				025ACC892AA3811400D6FFD1 /* SceneDelegate.swift in Sources */,
 				025ACC9C2AA381E300D6FFD1 /* MainViewController.swift in Sources */,
+				025ACCC02AA47A4600D6FFD1 /* BaseView.swift in Sources */,
 				025ACCB52AA393DB00D6FFD1 /* PersonTableViewCell.swift in Sources */,
+				025ACCC22AA47A5E00D6FFD1 /* BaseTableViewCell.swift in Sources */,
 				025ACCAE2AA3881F00D6FFD1 /* Trending.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
