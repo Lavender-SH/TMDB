@@ -12,7 +12,7 @@ class MainView: BaseView {
     lazy var tableView: UITableView = {
         let view = UITableView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.rowHeight = UITableView.automaticDimension
+        view.rowHeight = 100
         view.register(MovieTableViewCell.self, forCellReuseIdentifier: "MovieCell")
         view.register(TVTableViewCell.self, forCellReuseIdentifier: "TVCell")
         view.register(PersonTableViewCell.self, forCellReuseIdentifier: "PersonCell")

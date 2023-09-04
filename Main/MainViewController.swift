@@ -11,7 +11,6 @@ import SnapKit
 enum MediaSelection {
     case movie
     case tv
-    
 }
 
 class MainViewController: BaseViewController {
@@ -21,6 +20,8 @@ class MainViewController: BaseViewController {
     var filteredItems: [TrendingItem] = []
     var personItems: [Result] = []
     var isPersonSelected: Bool = false
+    var isEnd = false
+    var page = 1
     
     var selectedMedia: MediaSelection? = nil {
         didSet {
@@ -39,11 +40,11 @@ class MainViewController: BaseViewController {
     override func loadView() {
         self.view = mainView
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadData()
-        personLoadData(type: "person")
+        loadData(type: "movie", page: page)
+        personLoadData(type: "person", page: page)
         mainView.tableView.delegate = self
         mainView.tableView.dataSource = self
         mainView.searchBar.delegate = self
@@ -61,8 +62,8 @@ class MainViewController: BaseViewController {
     }
     
     
-    func loadData(type: String? = nil) {
-        TrendAPIAllCallRequest(type: type) { [weak self] items in
+    func loadData(type: String? = nil, page: Int) {
+        TrendAPIAllCallRequest(type: type, page: page) { [weak self] items in
             guard let weakSelf = self, let items = items else { return }
             weakSelf.trendingItems.append(contentsOf: items)
             weakSelf.filteredItems.append(contentsOf: items)
@@ -72,14 +73,14 @@ class MainViewController: BaseViewController {
         }
     }
     //⭐️⭐️⭐️
-    func personLoadData(type: String? = nil) {
-        TrendAPIPersonCallRequest(type: type) { [weak self] items in
-            print("=====333333====", items)
+    func personLoadData(type: String? = nil, page: Int) {
+        TrendAPIPersonCallRequest(type: type, page: page) { [weak self] items in
+            print("===333===", items)
             guard let weakSelf = self, let items = items else { return }
             weakSelf.personItems.append(contentsOf: items)
             weakSelf.mainView.tableView.reloadData()
             print(#function)
-            print("==0.00==", weakSelf.personItems)
+            print("==444==", weakSelf.personItems)
         }
     }
     
@@ -100,13 +101,13 @@ class MainViewController: BaseViewController {
     @objc func personButtonTapped(_ sender: UIButton) {
         selectedMedia = nil
         isPersonSelected = true
-        personLoadData(type: "person")
+        personLoadData(type: "person", page: page)
         mainView.tableView.reloadData()
     }
 }
 
 // MARK: - tableView 확장
-extension MainViewController: UITableViewDelegate, UITableViewDataSource {
+extension MainViewController: UITableViewDelegate, UITableViewDataSource, UITableViewDataSourcePrefetching {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isPersonSelected {
@@ -143,6 +144,35 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
     }
+    
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        for indexPath in indexPaths {
+            if isPersonSelected {
+                if personItems.count - 1 == indexPath.row && page < 15 && isEnd == false {
+                    page += 1
+                    print("===788888777===", page)
+                    personLoadData(type: mainView.searchBar.text, page: page)
+                }
+            } else {
+                if filteredItems.count - 1 == indexPath.row && page < 15 && isEnd == false {
+                    page += 1
+                    print("===77777777===", page)
+                    loadData(type: mainView.searchBar.text, page: page)
+                    
+                    
+                    
+    func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
+            print("=====취소: \(indexPaths)")
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
+        print("=====취소: \(indexPaths)")
+    }
 }
 
 // MARK: - SearchBar 확장
@@ -159,8 +189,8 @@ extension MainViewController: UISearchBarDelegate {
     //⭐️⭐️⭐️
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchText = searchBar.text else { return }
-        loadData(type: searchText)
-        personLoadData(type: searchText)
+        loadData(type: searchText, page: page)
+        personLoadData(type: searchText, page: page)
         mainView.tableView.reloadData()
     }
 }
