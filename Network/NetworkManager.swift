@@ -13,20 +13,20 @@ func TrendAPIAllCallRequest(type: String? = nil, page: Int, completion: @escapin
     
     var url = "https://api.themoviedb.org/3/trending/all/day?api_key=\(APIKey.TMDBKey)"
     //if let type = type { "https://api.themoviedb.org/3/trending/all/day?api_key=\(APIKey.TMDBKey)" }
-    if let type = type { url = "https://api.themoviedb.org/3/trending/\(type)/day?api_key=\(APIKey.TMDBKey)&size=15&page=\(page)"}
+    if let type = type { url = "https://api.themoviedb.org/3/trending/\(type)/day?api_key=\(APIKey.TMDBKey)&size=5&page=\(page)"}
 
     AF.request(url, method: .get).validate(statusCode: 200...500).responseDecodable(of: TrendingResponse.self) { response in
         guard let value = response.value else { return }
         
         if let statusCode = response.response?.statusCode {
-                    print("===000===Status Code: \(statusCode)")
+                    //print("===000===Status Code: \(statusCode)")
                 }
         
         
         switch response.result {
         case .success(let value):
             completion(value.results)
-            print(value)
+            //print(value)
             
         case .failure(let error):
             print("Error: \(error)")
@@ -40,19 +40,19 @@ func TrendAPIAllCallRequest(type: String? = nil, page: Int, completion: @escapin
 func TrendAPIPersonCallRequest(type: String? = nil, page: Int, completion: @escaping ([Result]?) -> Void) {
     
     var url = "https://api.themoviedb.org/3/trending/all/day?api_key=\(APIKey.TMDBKey)"
-    if let type = type { url = "https://api.themoviedb.org/3/trending/\(type)/day?api_key=\(APIKey.TMDBKey)&size=15&page=\(page)"}
+    if let type = type { url = "https://api.themoviedb.org/3/trending/\(type)/day?api_key=\(APIKey.TMDBKey)&size=5&page=\(page)"}
 
     print(url)
     AF.request(url, method: .get).validate(statusCode: 200...500).responseDecodable(of: Person.self) { response in
         
-        print(String(describing: response))
+//        print(String(describing: response))
         
-        print("===555===", response.value)
-        print("===1111===", response.response?.statusCode)
+        //print("===555===", response.value)
+        //print("===1111===", response.response?.statusCode)
         guard let value = response.value else { return }
             
         if let statusCode = response.response?.statusCode {
-                    print("===1111===Status Code: \(statusCode)")
+                    //print("===1111===Status Code: \(statusCode)")
                 }
         
         
@@ -60,7 +60,7 @@ func TrendAPIPersonCallRequest(type: String? = nil, page: Int, completion: @esca
         case .success(let value):
             completion(value.results)
 
-            print(value)
+            //print(value)
             
         case .failure(let error):
             print("Error: \(error)")

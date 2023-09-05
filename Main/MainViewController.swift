@@ -47,7 +47,9 @@ class MainViewController: BaseViewController {
         personLoadData(type: "person", page: page)
         mainView.tableView.delegate = self
         mainView.tableView.dataSource = self
+        mainView.tableView.prefetchDataSource = self
         mainView.searchBar.delegate = self
+        
         mainView.movieButton.addTarget(self, action: #selector(filterButtonTapped(_:)), for: .touchUpInside)
         mainView.tvButton.addTarget(self, action: #selector(filterButtonTapped(_:)), for: .touchUpInside)
         mainView.personButton.addTarget(self, action: #selector(personButtonTapped(_:)), for: .touchUpInside)
@@ -69,18 +71,18 @@ class MainViewController: BaseViewController {
             weakSelf.filteredItems.append(contentsOf: items)
             weakSelf.mainView.tableView.reloadData()
             print(#function)
-            print("==0==", weakSelf.trendingItems)
+            //print("==0==", weakSelf.trendingItems)
         }
     }
     //⭐️⭐️⭐️
     func personLoadData(type: String? = nil, page: Int) {
         TrendAPIPersonCallRequest(type: type, page: page) { [weak self] items in
-            print("===333===", items)
+            //print("===333===", items)
             guard let weakSelf = self, let items = items else { return }
             weakSelf.personItems.append(contentsOf: items)
             weakSelf.mainView.tableView.reloadData()
             print(#function)
-            print("==444==", weakSelf.personItems)
+            print("==444==", weakSelf.personItems.count, page)
         }
     }
     
@@ -120,9 +122,14 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource, UITabl
             return 0
         }
     }
+
     //⭐️⭐️⭐️
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if isPersonSelected {
+            guard indexPath.row < personItems.count else {
+                return UITableViewCell()
+            }
+            
             let personItem = personItems[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: "PersonCell", for: indexPath) as! PersonTableViewCell
             cell.configure(with: personItem)
@@ -146,27 +153,34 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource, UITabl
     }
     
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        print(#function)
         for indexPath in indexPaths {
+            
+            page = 1
+        
+
+            print("=====99999999999======", personItems.count, page)
             if isPersonSelected {
                 if personItems.count - 1 == indexPath.row && page < 15 && isEnd == false {
+                    personItems.removeAll()
                     page += 1
                     print("===788888777===", page)
-                    personLoadData(type: mainView.searchBar.text, page: page)
+                    //personLoadData(type: mainView.searchBar.text, page: page)
+                    personLoadData(type: "person", page: page)
+                    
                 }
+                print("=====99999999999======", personItems.count, page)
             } else {
                 if filteredItems.count - 1 == indexPath.row && page < 15 && isEnd == false {
+                    personItems.removeAll()
                     page += 1
                     print("===77777777===", page)
-                    loadData(type: mainView.searchBar.text, page: page)
+                    //loadData(type: mainView.searchBar.text, page: page)
+                    loadData(type: "movie", page: page)
                     
-                    
-                    
-    func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
-            print("=====취소: \(indexPaths)")
-                    }
                 }
             }
-        }
+            print("=====99999999999======", personItems.count, page) } 
     }
     
     
@@ -194,3 +208,5 @@ extension MainViewController: UISearchBarDelegate {
         mainView.tableView.reloadData()
     }
 }
+
+
